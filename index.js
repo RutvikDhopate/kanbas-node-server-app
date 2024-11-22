@@ -20,9 +20,10 @@ app.use(
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "kanbas",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 };
 if (process.env.NODE_ENV !== "development") {
+    console.log("Checking if coming inside pt2");
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
         sameSite: "none",
@@ -34,6 +35,11 @@ app.use(
     session(sessionOptions)
 );
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log("Request URL:", req.method, req.url); 
+    console.log("Session Data:", req.session); 
+    next(); 
+});
 
 Hello(app);
 Lab5(app);
