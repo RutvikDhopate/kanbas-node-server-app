@@ -14,7 +14,8 @@ const app = express()
 app.use(
     cors({
         credentials: true,
-        origin: "http://localhost:3000" || process.env.NETLIFY_URL
+        // origin: "http://localhost:3000" || process.env.NETLIFY_URL
+        origin: process.env.NODE_ENV === "production" ? process.env.NETLIFY_URL : "http://localhost:3000"
     })
 );
 const sessionOptions = {
