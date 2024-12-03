@@ -1,10 +1,31 @@
-// creating a quizz
-// publish/unpublish a quizz
-// updating a quizz
-// deleting a quizz
-
-// can students attempt a quizz
 import mongoose from "mongoose";
+
+// Define the subdocument schema for a question
+const QuestionSchema = new mongoose.Schema({
+  points: Number,
+  questionText: String,
+  questionType: {
+    type: String,
+    enum: [
+      "Multiple Choice",
+      "Mutiple Select",
+      "True/False",
+      "Fill in the Blanks",
+    ],
+    default: "Multiple Choice",
+  },
+  choices: [
+    {
+      text: String,
+      isCorrect: Boolean,
+    },
+  ],
+  blanks: [
+    {
+      answer: String,
+    },
+  ],
+});
 
 const QuizSchema = new mongoose.Schema(
   {
@@ -14,12 +35,7 @@ const QuizSchema = new mongoose.Schema(
     points: Number,
     quizType: {
       type: String,
-      enum: [
-        "Ungraded Quiz",
-        "Graded Quiz",
-        // "Graded Survey",
-        // "Ungraded Survey",
-      ],
+      enum: ["Ungraded Quiz", "Graded Quiz"],
       default: "Graded Quiz",
     },
     timeLimit: Number,
@@ -48,10 +64,7 @@ const QuizSchema = new mongoose.Schema(
     dueDate: String,
     availabilityDate: String,
     untilDate: String,
-    // TODO - questions
-    // questions: [
-    //   { type: mongoose.Schema.Types.ObjectId, ref: "QuestionsModel" },
-    // ],
+    questions: [QuestionSchema],
   },
   { collection: "quizes" }
 );

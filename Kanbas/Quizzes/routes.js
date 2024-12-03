@@ -28,7 +28,7 @@ export default function QuizRoutes(app) {
   const getQuiz = async (req, res) => {
     const { qid } = req.params;
     try {
-      const quiz = await dao.findQuiz(qid).populate("questions").exec();
+      const quiz = await dao.findQuiz(qid);
       res.status(200).json(quiz);
     } catch (error) {
       handleError(res, error, 404);
