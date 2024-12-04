@@ -66,6 +66,6 @@ const QuizSchema = new mongoose.Schema(
     untilDate: String,
     questions: [QuestionSchema],
   },
-  { collection: "quizes" }
+  { collection: "quizzes" }
 );
 export default QuizSchema;
