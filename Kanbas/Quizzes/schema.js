@@ -29,7 +29,7 @@ const QuestionSchema = new mongoose.Schema({
 
 const QuizSchema = new mongoose.Schema(
   {
-    courseId: { type: mongoose.Schema.Types.ObjectId, ref: "courseModel" },
+    courseId: { type: mongoose.Schema.Types.ObjectId, ref: "CourseModel" },
     title: String,
     description: String,
     points: Number,

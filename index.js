@@ -11,6 +11,7 @@ import session from "express-session";
 import AssignmentsRoutes from "./Kanbas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kanbas/Enrollments/routes.js";
 import QuizRoutes from "./Kanbas/Quizzes/routes.js";
+import QuizAttemptRoutes from "./Kanbas/QuizAttempt/routes.js";
 
 const CONNECTION_STRING =
   process.env.MONGO_CONNECTION_STRING ||
@@ -55,4 +56,5 @@ ModuleRoutes(app);
 AssignmentsRoutes(app);
 EnrollmentsRoutes(app);
 QuizRoutes(app);
+QuizAttemptRoutes(app);
 app.listen(process.env.PORT || 4000);
