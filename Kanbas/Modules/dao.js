@@ -1,17 +1,25 @@
 //import Database from "../Database/index.js";
 import model from "./model.js";
+import mongoose from "mongoose";
+import courseModel from "../Courses/model.js";
 
-export function findModulesForCourse(courseId) {
-    return model.find({ course: courseId });
+export async function findModulesForCourse(courseId) {
+    const course = await courseModel.findById(courseId);
+    const modules = await model.find({ course: course.number});
+    return modules;
     // const { modules } = Database;
     // return modules.filter((module) => module.course === courseId);
 }
 
-export function createModule(module) {
+export async function createModule(module) {
+    const course = await courseModel.findOne({ _id: new mongoose.Types.ObjectId(module.course) });
+    module.course = course.number;
     delete module._id;
-    return model.create(module);
-    // const newModule = { ...module, _id: Date.now().toString() };
-    // Database.modules = [...Database.modules, newModule];
+    const newModule = await model.create(module);
+    // (await newModule).course = course.number;
+    return newModule;
+    // const newModule = {...module, _id: Date.now().toString()};
+    // Database.modules = [...Database.modules, newModules];
     // return newModule;
 }
 
@@ -22,7 +30,8 @@ export function deleteModule(moduleId) {
 }
 
 export function updateModule(moduleId, moduleUpdates) {
-    return model.updateOne({ _id: moduleId }, moduleUpdates);
+    const objectId = new mongoose.Types.ObjectId(moduleId);
+    return model.updateOne({ _id: objectId }, moduleUpdates);
     // const { modules } = Database;
     // const module = modules.find((module) => module._id === moduleId);
     // Object.assign(module, moduleUpdates);
